@@ -1,10 +1,8 @@
-{{-- File: resources/views/books/create.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Tambah Buku')
 
 @section('content')
-    {{-- Kita pertahankan sedikit CSS khusus form di sini agar tampilannya tetap rapi --}}
     <style>
         label { display: block; margin-top: 12px; font-weight: bold; }
         input, select, textarea { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }

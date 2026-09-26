@@ -1,4 +1,3 @@
-{{-- File: resources/views/books/index.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Daftar Buku')
