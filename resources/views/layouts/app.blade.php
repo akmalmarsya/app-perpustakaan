@@ -22,6 +22,9 @@
         .badge-dipinjam { background-color: #fef08a; color: #854d0e; }
         .badge-dikembalikan { background-color: #d1fae5; color: #065f46; }
         .badge-terlambat { background-color: #fecaca; color: #991b1b; }
+        nav .navbar-user { display: flex; align-items: center; gap: 12px; color: #cbd5e1; font-size: 14px; }
+        nav .btn-logout { background: none; border: 1px solid #cbd5e1; color: #cbd5e1; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        nav .btn-logout:hover { background: #1e40af; color: #fff; }
     </style>
 </head>
 <body>

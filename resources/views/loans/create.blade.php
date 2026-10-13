@@ -8,8 +8,9 @@
         label { display: block; margin-top: 12px; font-weight: bold; }
         input, select { width: 100%; padding: 6px; margin-top: 4px; box-sizing: border-box; }
         .checkbox-list { border: 1px solid #ccc; border-radius: 4px; padding: 10px; margin-top: 4px; max-height: 200px; overflow-y: auto; }
-        .checkbox-list label { display: block; font-weight: normal; margin-top: 4px; }
+        .checkbox-list label { display: block; font-weight: normal; margin-top: 0; }
         .error { color: #b91c1c; font-size: 14px; margin-top: 4px; }
+        .petugas-info { margin-top: 16px; color: #475569; font-style: italic; }
     </style>
 
     <h1>Tambah Peminjaman</h1>
@@ -27,26 +28,25 @@
                 </option>
             @endforeach
         </select>
-        @error('member_id') <div class="error">{{ $message }}</div> @enderror
+        @error('member_id')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
-        <label for="user_id">Petugas</label>
-        <select name="user_id" id="user_id">
-            <option value="">-- Pilih Petugas --</option>
-            @foreach ($users as $user)
-                <option value="{{ $user['id'] }}" @selected(old('user_id') == $user['id'])>
-                    {{ $user['name'] }}
-                </option>
-            @endforeach
-        </select>
-        @error('user_id') <div class="error">{{ $message }}</div> @enderror
+        <p class="petugas-info">
+            Petugas pencatat: <strong>{{ auth()->user()->name }}</strong> (otomatis dari akun yang login).
+        </p>
 
         <label for="tanggal_pinjam">Tanggal Pinjam</label>
-        <input type="date" name="tanggal_pinjam" id="tanggal_pinjam" value="{{ old('tanggal_pinjam', date('Y-m-d')) }}">
-        @error('tanggal_pinjam') <div class="error">{{ $message }}</div> @enderror
+        <input type="date" name="tanggal_pinjam" id="tanggal_pinjam" value="{{ old('tanggal_pinjam') }}">
+        @error('tanggal_pinjam')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
         <label for="tanggal_kembali">Tanggal Kembali</label>
         <input type="date" name="tanggal_kembali" id="tanggal_kembali" value="{{ old('tanggal_kembali') }}">
-        @error('tanggal_kembali') <div class="error">{{ $message }}</div> @enderror
+        @error('tanggal_kembali')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
         <label>Buku yang Dipinjam</label>
         <div class="checkbox-list">
@@ -54,13 +54,15 @@
                 <label>
                     <input type="checkbox" name="book_ids[]" value="{{ $book['id'] }}"
                         @checked(in_array($book['id'], old('book_ids', [])))>
-                    {{ $book['judul'] }} (stok: {{ $book['stok'] }})
+                    {{ $book['judul'] }} (Stok: {{ $book['stok'] }})
                 </label>
             @empty
                 <p>Belum ada data buku.</p>
             @endforelse
         </div>
-        @error('book_ids') <div class="error">{{ $message }}</div> @enderror
+        @error('book_ids')
+            <div class="error">{{ $message }}</div>
+        @enderror
 
         <br><br>
         <button type="submit" class="btn">Simpan</button>
