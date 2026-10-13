@@ -1,4 +1,3 @@
-{{-- File: resources/views/loans/show.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Detail Peminjaman')
@@ -13,7 +12,7 @@
         <tr><th>Tanggal Pinjam</th><td>{{ $loan['tanggal_pinjam'] }}</td></tr>
         <tr><th>Tanggal Kembali</th><td>{{ $loan['tanggal_kembali'] }}</td></tr>
         <tr><th>Tanggal Dikembalikan</th><td>{{ $loan['tanggal_dikembalikan'] ?? '-' }}</td></tr>
-        <tr><th>Status</th><td>{{ ucfirst($loan['status']) }}</td></tr>
+        <tr><th>Status</th><td><span class="badge badge-{{ $loan['status'] }}">{{ ucfirst($loan['status']) }}</span></td></tr>
     </table>
 
     <h2 style="margin-top: 30px;">Buku yang Dipinjam</h2>

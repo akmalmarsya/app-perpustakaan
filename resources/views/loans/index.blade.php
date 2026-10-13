@@ -1,4 +1,3 @@
-{{-- File: resources/views/loans/index.blade.php --}}
 @extends('layouts.app')
 
 @section('title', 'Daftar Peminjaman')
@@ -34,11 +33,21 @@
                     </td>
                     <td>{{ $loan['tanggal_pinjam'] }}</td>
                     <td>{{ $loan['tanggal_kembali'] }}</td>
-                    <td>{{ ucfirst($loan['status']) }}</td>
+                    <td>
+                        <span class="badge badge-{{ $loan['status'] }}">{{ ucfirst($loan['status']) }}</span>
+                    </td>
                     <td>
                         <a href="{{ route('loans.show', $loan['id']) }}">Detail</a>
                         |
                         <a href="{{ route('loans.edit', $loan['id']) }}">Edit</a>
+                        @if ($loan['status'] === 'dipinjam')
+                            |
+                            <form class="inline" action="{{ route('loans.kembalikan', $loan['id']) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="btn" style="background-color: #16a34a; padding: 2px 8px; font-size: 13px;">Kembalikan</button>
+                            </form>
+                        @endif
                         |
                         <form class="inline" action="{{ route('loans.destroy', $loan['id']) }}" method="POST">
                             @csrf
