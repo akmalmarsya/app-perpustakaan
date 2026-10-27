@@ -67,3 +67,78 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ### Pertanyaan pertemuan 1
 Menurut pemahaman saya, Model bertugas untuk mengelola data dan berinteraksi langsung di database. View adalah bagian UI yang dilihat dan digunakan oleh user. Lalu ada Controller yang sebagai jembatan yang menerima request dari user, memproses logika bisnisnya melalui Model, lalu mengirimkan hasilnya ke View.
+
+# Dokumentasi REST API - Perpustakaan Digital Kampus
+
+Dokumentasi ini mencakup seluruh *endpoint* REST API yang tersedia pada aplikasi Perpustakaan Digital. Seluruh *response* dikembalikan dalam format JSON.
+
+Base URL: `http://localhost:8000/api`  
+Header Wajib: `Accept: application/json`
+
+---
+
+## Ringkasan Endpoint
+
+| Method | Endpoint | Deskripsi | Status Code Sukses |
+|---|---|---|---|
+| `GET` | `/api/books` | Mengambil daftar buku (support search & filter) | `200 OK` |
+| `GET` | `/api/books/{id}` | Mengambil detail buku berdasarkan ID | `200 OK` |
+| `POST` | `/api/books` | Menambahkan data buku baru | `201 Created` |
+| `PUT` | `/api/books/{id}` | Perbarui data buku berdasarkan ID | `200 OK` |
+| `DELETE` | `/api/books/{id}` | Menghapus data buku berdasarkan ID | `200 OK` |
+| `GET` | `/api/members` | Mengambil daftar anggota | `200 OK` |
+| `GET` | `/api/members/{id}` | Mengambil detail anggota berdasarkan ID | `200 OK` |
+| `GET` | `/api/loans` | Mengambil daftar transaksi peminjaman | `200 OK` |
+| `POST` | `/api/loans` | Membuat transaksi peminjaman baru | `201 Created` |
+| `PUT` | `/api/loans/{id}/kembalikan` | Mengubah status peminjaman menjadi dikembalikan | `200 OK` |
+| `GET` | `/api/stats` | Mengambil statistik ringkasan perpustakaan | `200 OK` |
+
+---
+
+## Detail Endpoint
+
+### 1. Books (Buku)
+
+#### `GET /api/books`
+Mengambil daftar buku terpaginasi (10 item/halaman).
+
+* **Query Parameters (Opsional):**
+  * `judul` (string): Filter berdasarkan kata kunci judul buku (`LIKE %judul%`).
+  * `category_id` (integer): Filter berdasarkan ID kategori.
+
+* **Response Sukses (`200 OK`):**
+```json
+{
+  "data": [
+    {
+      "id": 1,
+      "judul": "Laskar Pelangi",
+      "penulis": "Andrea Hirata",
+      "penerbit": "Bentang Pustaka",
+      "tahun_terbit": 2005,
+      "isbn": "978-979-3062-79-2",
+      "stok": 12,
+      "sampul": null,
+      "category": {
+        "id": 1,
+        "nama_kategori": "Novel"
+      },
+      "created_at": "2026-10-06T02:00:00.000000Z",
+      "updated_at": "2026-10-06T02:00:00.000000Z"
+    }
+  ],
+  "links": {
+    "first": "http://localhost:8000/api/books?page=1",
+    "last": "http://localhost:8000/api/books?page=1",
+    "prev": null,
+    "next": null
+  },
+  "meta": {
+    "current_page": 1,
+    "from": 1,
+    "last_page": 1,
+    "per_page": 10,
+    "to": 1,
+    "total": 1
+  }
+}
