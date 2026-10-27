@@ -6,13 +6,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MemberController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
 
-// Route Publik
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Route Proteksi (Wajib Login)
 Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return redirect()->route('books.index');
@@ -23,8 +22,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('loans', LoanController::class);
     Route::patch('/loans/{loan}/kembalikan', [LoanController::class, 'kembalikan'])->name('loans.kembalikan');
 
-    // Khusus Admin
     Route::middleware(['admin'])->group(function () {
         Route::resource('categories', CategoryController::class)->except(['show']);
     });
+
+    Route::get('/profil', [ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profil/password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
 });
